@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:50:33 by crtorres          #+#    #+#             */
-/*   Updated: 2023/05/30 13:06:04 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/05 13:15:00 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ unsigned long	get_time(void)
 
 void	ft_clear_data(t_data *data)
 {
-	if (data->philo)
-		free(data->philo);
+	if (data->philos)
+		free(data->philos);
 	if (data->forks)
 		free(data->forks);
 }

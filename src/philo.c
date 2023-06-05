@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:56:18 by crtorres          #+#    #+#             */
-/*   Updated: 2023/05/31 17:38:19 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:30:16 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,15 @@ int	ft_create_threads(t_data *data)
 	data->start_time = get_time();
 	while( i < data->nbr_philo)
 	{
-		data->philo[i].last_meal = get_time();
-		if (pthread_create())
+		data->philos[i].last_meal = get_time();
+		if (pthread_create(&data->philos[i].philo_id, NULL, routine, 
+			&data->philos[i]))
+			return (0);
 	}
+	check_dead(data, data->philos);
+	pthread_mutex_unlock(&data->write);
 }
+
 int	ft_check_args(int argc, char **argv, t_data *data)
 {
 	int	i;
@@ -62,4 +67,6 @@ int	main(int argc, char **argv)
 
 	ft_check_args(argc, argv, data);
 	ft_init(&data, argc, argv);
+	ft_create_threads(&data);
+	
 }

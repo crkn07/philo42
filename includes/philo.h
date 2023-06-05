@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:57:00 by crtorres          #+#    #+#             */
-/*   Updated: 2023/05/31 17:36:01 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:17:44 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int				nbr_meals;
+	int				max_meals;
 	int				nbr_philo;
 	int				dead;
 	int				end;
@@ -47,7 +48,7 @@ typedef struct s_data
 	unsigned long	eat_time;
 	unsigned long	sleep_time;
 	unsigned long	start_time;
-	t_philo			*philo;
+	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	meals;
 	pthread_mutex_t	lock;
@@ -60,5 +61,7 @@ int				ft_init_data(t_data *data, int argc, char **argv);
 int				ft_create_philo(t_data *data);
 int				ft_create_forks(t_data *data);
 unsigned long	get_time(void);
+void			*routine(void *pointer);
+void			print_msg(char *msg, t_philo *philo);
 
 #endif

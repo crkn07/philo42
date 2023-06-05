@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/05/24 15:12:09 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:36:43 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,3 +58,33 @@ void	*supervisor(void *pointer)
 	}
 }
 
+void	check_dead(t_data *data, t_philo **philo)
+{
+	int	i;
+
+	while (!data->max_meals)
+	{
+		i = -1;
+		{
+			while (++i < data->nbr_philo && !data->end)
+			{
+				pthread_mutex_lock(&data->meals);
+				if ((int)(get_time() - philo[i]->last_meal) >= data->death_time)
+				{
+					pthread_mutex_lock(&data->write);
+					print_msg("died", &philo[i]);
+				}
+				pthread_mutex_unlock(&data->meals);
+			}
+			if (data->end)
+				break;
+		}
+		i = 0;
+		while (data->nbr_meals && i < data->nbr_meals 
+			&& philo[i]->n_meals && data->nbr_meals)
+			i++;
+		data->max_meals = (i ==data->nbr_philo);
+	}
+}
+
+void	end_philos()
