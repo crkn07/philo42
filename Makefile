@@ -6,7 +6,7 @@
 #    By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/09 16:26:37 by crtorres          #+#    #+#              #
-#    Updated: 2023/05/17 11:43:41 by crtorres         ###   ########.fr        #
+#    Updated: 2023/06/06 17:02:59 by crtorres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CC = gcc
 
 CFLAGS = -I inc -I libft -Wall -Wextra -Werror
 
-SRC = philo.c philo_utils.c philo_utils2.c \
+SRC = philo.c philo_utils.c philo_utils2.c actions.c init.c \
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 

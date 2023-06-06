@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/06 12:25:24 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:54:00 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,23 @@
 void	*routine(void *pointer)
 {
 	t_philo	*philo;
+	t_data	*data;
 
 	philo = pointer;
-	philo->tt_die = philo->st_data->death_time + get_time();
-
+	data = philo->st_data;
+	if (philo->position % 2 && data->nbr_philo > 1)
+		ft_usleep(data->eat_time);
+	while (!data->end && !data->max_meals)
+	{
+		printf("entra \n");
+		ft_eats(philo);
+		ft_usleep(philo->st_data->sleep_time);
+		print_msg("think", philo);
+	}
+	return (NULL);
 }
 
-void	*count_meals(void *pointer)
+/* void	*count_meals(void *pointer)
 {
 	t_philo	*philo;
 
@@ -30,9 +40,9 @@ void	*count_meals(void *pointer)
 	philo->st_data->end++;
 	philo->count_meal++;
 	pthread_mutex_unlock(&philo->st_data->lock);
-}
+} */
 
-void	*supervisor(void *pointer)
+/* void	*supervisor(void *pointer)
 {
 	t_philo 		*philo;
 	unsigned long	time;
@@ -56,9 +66,9 @@ void	*supervisor(void *pointer)
 			count_meals(philo);
 		pthread_mutex_unlock(&philo->lock);
 	}
-}
+} */
 
-void	check_dead(t_data *data, t_philo **philo)
+void	check_dead(t_data *data, t_philo *philo)
 {
 	int	i;
 
@@ -69,10 +79,10 @@ void	check_dead(t_data *data, t_philo **philo)
 			while (++i < data->nbr_philo && !data->end)
 			{
 				pthread_mutex_lock(&data->meals);
-				if ((int)(get_time() - philo[i]->last_meal) >= data->death_time)
+				if ((get_time() - philo[i].last_meal) >= data->death_time)
 				{
 					pthread_mutex_lock(&data->write);
-					print_msg("died", &philo[i]);
+					print_msg("died", philo[i]);
 				}
 				pthread_mutex_unlock(&data->meals);
 			}
@@ -92,5 +102,37 @@ void	end_philos(t_data *data)
 	int	i;
 
 	if (data->nbr_philo == 1)
+		pthread_detach(data->philos[0].philo_id);
+	else
+	{
+		i = 0;
+		while (i < data->nbr_philo)
+		{
+		pthread_join(data->philos[i].philo_id, NULL);
+		i++;
+		}
+	}
+	i = -1;
+	while (++i < data->nbr_philo)
+		pthread_mutex_destroy(&data->forks[i]);
+	pthread_mutex_destroy(&data->meals);
+	pthread_mutex_destroy(&data->write);
+	ft_clear_data(data);
+}
 
+void	ft_eats(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->st_data->forks[philo->left_fork]);
+	print_msg("take a left fork", philo);
+	pthread_mutex_lock(&philo->st_data->forks[philo->right_fork]);
+	print_msg("take a right fork", philo);
+	pthread_mutex_lock(&philo->st_data->meals);
+	print_msg("eat", philo);
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(&philo->st_data->meals);
+	ft_usleep(philo->st_data->sleep_time);
+	philo->n_meals++;
+	pthread_mutex_unlock(&philo->st_data->forks[philo->left_fork]);
+	pthread_mutex_unlock(&philo->st_data->forks[philo->right_fork]);
+	print_msg("sleep", philo);
 }
