@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:57:00 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/06 18:51:39 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:10:41 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_philo
 {
 	int				n_meals;
 	int				id;
-	int				position;
 	int				left_fork;
 	int				right_fork;
 	int 			count_meal;

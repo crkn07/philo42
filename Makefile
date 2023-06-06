@@ -6,7 +6,7 @@
 #    By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/09 16:26:37 by crtorres          #+#    #+#              #
-#    Updated: 2023/06/06 17:02:59 by crtorres         ###   ########.fr        #
+#    Updated: 2023/06/06 19:12:54 by crtorres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ DOT_O = _objFiles
 
 CC = gcc
 
-CFLAGS = -I inc -I libft -Wall -Wextra -Werror
+CFLAGS =-Wall -Wextra -Werror -g -fsanitize=thread
 
 SRC = philo.c philo_utils.c philo_utils2.c actions.c init.c \
 

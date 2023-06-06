@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/06 18:54:00 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:12:03 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	*routine(void *pointer)
 
 	philo = pointer;
 	data = philo->st_data;
-	if (philo->position % 2 && data->nbr_philo > 1)
+	if (philo->id % 2 && data->nbr_philo > 1)
 		ft_usleep(data->eat_time);
 	while (!data->end && !data->max_meals)
 	{
-		printf("entra \n");
+		//printf("entra \n");
 		ft_eats(philo);
 		ft_usleep(philo->st_data->sleep_time);
 		print_msg("think", philo);
@@ -82,7 +82,8 @@ void	check_dead(t_data *data, t_philo *philo)
 				if ((get_time() - philo[i].last_meal) >= data->death_time)
 				{
 					pthread_mutex_lock(&data->write);
-					print_msg("died", philo[i]);
+					print_msg("died", &philo[i]);
+					data->end = 1;
 				}
 				pthread_mutex_unlock(&data->meals);
 			}
@@ -91,7 +92,7 @@ void	check_dead(t_data *data, t_philo *philo)
 		}
 		i = 0;
 		while (data->nbr_meals && i < data->nbr_meals
-			&& philo[i]->n_meals && data->nbr_meals)
+			&& philo[i].n_meals && data->nbr_meals)
 			i++;
 		data->max_meals = (i ==data->nbr_philo);
 	}

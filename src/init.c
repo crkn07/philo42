@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:28:31 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/06 18:43:51 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:26:29 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 	return (0);
 }
 
+/**
+ * The function initializes mutexes for forks, meals, and writing in a dining
+ * philosophers problem.
+ * 
+ * @param data The parameter "data" is a pointer to a struct of type "t_data". This
+ * struct likely contains information about the simulation being run, such as the
+ * number of philosophers, the time they can spend eating, and the number of meals
+ * they must eat before the simulation ends. The function initializes mutexes
+ * 
+ * @return The function `ft_init_mutex` is returning an integer value of 0.
+ */
 int	ft_init_mutex(t_data *data)
 {
 	int	i;
@@ -44,14 +55,14 @@ int	ft_init_mutex(t_data *data)
 	while (i < data->nbr_philo)
 	{
 		if (pthread_mutex_init(&(data->forks[i]), NULL))
-			return (0);
+			exit_error("failed init mutex\n", data);
 		i++;
 	}
 	if (pthread_mutex_init(&(data->meals), NULL))
-		return (0);
+		exit_error("failed init mutex\n", data);
 	if (pthread_mutex_init(&(data->write), NULL))
-		return (0);
-	return (1);
+		exit_error("failed init mutex\n", data);
+	return (0);
 }
 
 int	ft_create_philo(t_data *data)
