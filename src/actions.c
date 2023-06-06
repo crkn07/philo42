@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/05 17:36:43 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:25:24 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*routine(void *pointer)
 
 	philo = pointer;
 	philo->tt_die = philo->st_data->death_time + get_time();
-	
+
 }
 
 void	*count_meals(void *pointer)
@@ -36,7 +36,7 @@ void	*supervisor(void *pointer)
 {
 	t_philo 		*philo;
 	unsigned long	time;
-	
+
 	philo = pointer;
 	time = philo->st_data->start_time;
 	while (philo->st_data->dead == 0)
@@ -80,11 +80,17 @@ void	check_dead(t_data *data, t_philo **philo)
 				break;
 		}
 		i = 0;
-		while (data->nbr_meals && i < data->nbr_meals 
+		while (data->nbr_meals && i < data->nbr_meals
 			&& philo[i]->n_meals && data->nbr_meals)
 			i++;
 		data->max_meals = (i ==data->nbr_philo);
 	}
 }
 
-void	end_philos()
+void	end_philos(t_data *data)
+{
+	int	i;
+
+	if (data->nbr_philo == 1)
+
+}
