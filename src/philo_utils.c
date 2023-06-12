@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:50:33 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/06 19:49:41 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/09 17:30:23 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ unsigned long	get_time(void)
 {
 	struct timeval	tm;
 
-	if (gettimeofday(&tm, NULL))
-		exit_error("fail time", 0);
+	gettimeofday(&tm, NULL);
 	return ((tm.tv_sec * (unsigned long)1000) + (tm.tv_usec / 1000));
 }
 
@@ -35,6 +34,10 @@ void	ft_clear_data(t_data *data)
 		free(data->philos);
 	if (data->forks)
 		free(data->forks);
+	if (data->lock)
+		free(data->lock);
+	if (data->print_lock)
+		free(data->print_lock);
 }
 
 int	ft_usleep(unsigned long time)

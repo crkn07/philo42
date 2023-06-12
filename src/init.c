@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:28:31 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/06 19:26:29 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/12 12:59:29 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,24 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 {
 	data->nbr_philo = (unsigned long)ft_atoi(argv[1], data);
 	data->death_time = (unsigned long)ft_atoi(argv[2], data);
-	data->philos = malloc(sizeof(t_philo) * data->nbr_philo);
-	if (!data->philos)
-		exit_error("failed to alloc memory philosopher\n", data);
 	data->eat_time = (unsigned long)ft_atoi(argv[3], data);
 	data->sleep_time = (unsigned long)ft_atoi(argv[4], data);
-	data->max_meals = 0;
+	data->philos = malloc(sizeof(t_philo) * (data->nbr_philo));
+	if (!data->philos)
+		exit_error("failed to alloc memory philosopher\n", data);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->nbr_philo);
 	if (!data->forks)
 		exit_error("failed to alloc memory forks\n", data);
+	data->lock = malloc(sizeof(pthread_mutex_t) * data->nbr_philo);
+	if (!data->lock)
+		exit_error("failed to alloc lock memory", data);
+	data->print_lock = malloc(sizeof(pthread_mutex_t) * 1);
+	if (!data->print_lock)
+		exit_error("failed to alloc print_lock memory", data);
+	data->philo_id = (sizeof(pthread_t) * (data->nbr_philo));
+	if (!data->philo_id)
+		exit_error("failed to alloc philo_id memory", data);
+	data->max_meals = 0;
 	if (argc == 6)
 		data->nbr_meals = ft_atoi(argv[5], data);
 	else
@@ -32,7 +41,6 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 	if (data->nbr_philo <= 0 || data->nbr_philo > 200 || data->death_time < 0
 		|| data->eat_time < 0 || data->sleep_time < 0)
 		exit_error("invalid input data\n", data);
-	//printf("nº filo: %d\n", data->nbr_philo);
 	return (0);
 }
 
@@ -58,10 +66,14 @@ int	ft_init_mutex(t_data *data)
 			exit_error("failed init mutex\n", data);
 		i++;
 	}
-	if (pthread_mutex_init(&(data->meals), NULL))
-		exit_error("failed init mutex\n", data);
-	if (pthread_mutex_init(&(data->write), NULL))
-		exit_error("failed init mutex\n", data);
+	//if (pthread_mutex_init(&(data->meals), NULL))
+	//	exit_error("failure to init mutex\n", data);
+	//if (pthread_mutex_init(&(data->write), NULL))
+	//	exit_error("failure to init mutex\n", data);
+	if (pthread_mutex_init(&(data->lock[i]), NULL))
+		exit_error("failure to init mutex\n", data);
+	if (pthread_mutex_init(&(data->print_lock[i]), NULL))
+		exit_error("failure to init mutex\n", data);
 	return (0);
 }
 
@@ -70,13 +82,16 @@ int	ft_create_philo(t_data *data)
 	int	i;
 
 	i = 0;
+	ft_init_mutex(data);
 	while (i < data->nbr_philo)
 	{
 		data->philos[i].n_meals = 0;
-		data->philos[i].st_data = data;
+		data->philos[i].st_data = data; //!!!!!!!
 		data->philos[i].id = i + 1;
 		data->philos[i].left_fork = i;
 		data->philos[i].right_fork = i + 1 % (data->nbr_philo);
+		data->philos[i].lock = &(data->lock[i]);
+		data->philos[i].print_lock = data->print_lock;  //!!!!!
 		i++;	
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/06 20:14:58 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:12:58 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,89 +19,73 @@ void	*routine(void *pointer)
 
 	philo = pointer;
 	data = philo->st_data;
+	pthread_mutex_lock(philo->print_lock);
+	pthread_mutex_unlock(philo->print_lock);
 	if (philo->id % 2 && data->nbr_philo > 1)
-		ft_usleep(data->eat_time);
-	pthread_mutex_lock(&data->meals);
+		ft_usleep(data->eat_time / 50);
+	pthread_mutex_lock(philo->print_lock);
+	//pthread_mutex_lock(&data->meals);
 	while (!data->end && !data->max_meals)
 	{
-		//printf("entra \n");
+		pthread_mutex_unlock(philo->print_lock);
+		//pthread_mutex_unlock(&data->meals);
+		//pthread_mutex_lock(&data->meals);
+//		printf("nº f: %d\n", data->nbr_philo);
+		//pthread_mutex_unlock(philo->lock);
+		//printf("nº: %d\n", philo->id);
 		ft_eats(philo);
-		pthread_mutex_unlock(&data->meals);
+		//pthread_mutex_unlock(&data->meals);
 		ft_usleep(philo->st_data->sleep_time);
-		pthread_mutex_lock(&data->meals);
 		print_msg("think", philo);
+		//pthread_mutex_lock(philo->lock);
+		//pthread_mutex_lock(&data->meals);
+		pthread_mutex_lock(philo->print_lock);
 	}
-	pthread_mutex_unlock(&data->meals);
+	pthread_mutex_unlock(philo->print_lock);
+	//pthread_mutex_unlock(&data->meals);
 	return (NULL);
 }
 
-/* void	*count_meals(void *pointer)
+
+int	check_death(t_data *data, t_philo *philo)
 {
-	t_philo	*philo;
+	int	i = 0;
 
-	philo = pointer;
-	pthread_mutex_lock(&philo->st_data->lock);
-	philo->st_data->end++;
-	philo->count_meal++;
-	pthread_mutex_unlock(&philo->st_data->lock);
-} */
-
-/* void	*supervisor(void *pointer)
-{
-	t_philo 		*philo;
-	unsigned long	time;
-
-	philo = pointer;
-	time = philo->st_data->start_time;
-	while (philo->st_data->dead == 0)
+	//while (!data->max_meals)
+	//{
+		//i = -1;
+		//{
+			//while (++i < data->nbr_philo && !data->end)
+			//{
+				//pthread_mutex_lock(philo[i].lock);
+				//pthread_mutex_lock(philo->print_lock);
+				//pthread_mutex_lock(&data->meals);
+				//printf("check death--%p\n", philo->lock);
+	if ((get_time() - philo[i].last_meal) >= data->death_time)
 	{
-		pthread_mutex_lock(&philo->lock);
-		if (get_time() >= philo->tt_die && philo->eating == 0)
-		{
-			pthread_mutex_lock(&philo->st_data->write);
-			if (philo->st_data->dead == 0)
-			{
-				printf("%ld %d is died\n", time, philo->id);
-				philo->st_data->dead = 1;
-			}
-			pthread_mutex_unlock(&philo->st_data->write);
-		}
-		if (philo->count_meal = philo->st_data->nbr_meals)
-			count_meals(philo);
-		pthread_mutex_unlock(&philo->lock);
+		print_msg("died", &philo[i]);
+		pthread_mutex_lock(philo->print_lock);
+		//pthread_mutex_lock(&data->write);
+		//printf("entra\n");
+		data->end = 1;
+		pthread_mutex_unlock(philo->print_lock);
+		return (0);
 	}
-} */
-
-void	check_dead(t_data *data, t_philo *philo)
-{
-	int	i;
-
-	while (!data->max_meals)
-	{
-		i = -1;
-		{
-			while (++i < data->nbr_philo && !data->end)
-			{
-				pthread_mutex_lock(&data->meals);
-				if ((get_time() - philo[i].last_meal) >= data->death_time)
-				{
-					pthread_mutex_lock(&data->write);
-					print_msg("died", &philo[i]);
-					data->end = 1;
-				}
-				pthread_mutex_unlock(&data->meals);
-			}
-			if (data->end)
-				break;
-		}
+				//pthread_mutex_unlock(philo[i].lock);
+				//pthread_mutex_unlock(&data->meals);
+		//	}
+			//if (data->end){
+		//}
 		i = 0;
-		pthread_mutex_lock(&data->meals);
-		while (data->nbr_meals && i < data->nbr_meals
-			&& philo[i].n_meals && data->nbr_meals)
-			i++;
-		data->max_meals = (i ==data->nbr_philo);
-		pthread_mutex_unlock(&data->meals);
-	}
+		//pthread_mutex_lock(&data->meals);
+	while (data->nbr_meals && i < data->nbr_meals
+		&& philo[i].n_meals && data->nbr_meals)
+		i++;
+		//pthread_mutex_unlock(&data->meals);
+	pthread_mutex_lock(philo->print_lock);
+	data->max_meals = (i == data->nbr_philo);
+	pthread_mutex_unlock(philo->print_lock);
+	return (1);
 }
 
 void	end_philos(t_data *data)
@@ -123,20 +107,27 @@ void	end_philos(t_data *data)
 	while (++i < data->nbr_philo)
 		pthread_mutex_destroy(&data->forks[i]);
 	pthread_mutex_destroy(&data->meals);
-	pthread_mutex_destroy(&data->write);
+	//pthread_mutex_destroy(&data->write);
+	pthread_mutex_destroy(data->print_lock);
+	pthread_mutex_destroy(data->lock);
 	ft_clear_data(data);
 }
 
 void	ft_eats(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->st_data->forks[philo->left_fork]);
+	//printf("nº f: %d\n", philo->st_data->nbr_philo);
 	print_msg("take a left fork", philo);
 	pthread_mutex_lock(&philo->st_data->forks[philo->right_fork]);
+	//printf("entra en ft_eats\n");
 	print_msg("take a right fork", philo);
-	print_msg("eat", philo);
+	pthread_mutex_lock(philo->lock);
 	philo->last_meal = get_time();
-	ft_usleep(philo->st_data->sleep_time);
+	print_msg("eat", philo);
+	//printf("ft_eats--%d%p\n", philo->id, philo->lock);
 	philo->n_meals++;
+	pthread_mutex_unlock(philo->lock);
+	ft_usleep(philo->st_data->eat_time);
 	pthread_mutex_unlock(&philo->st_data->forks[philo->left_fork]);
 	pthread_mutex_unlock(&philo->st_data->forks[philo->right_fork]);
 	print_msg("sleep", philo);

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:57:00 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/06 19:10:41 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/12 13:03:55 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,10 @@ typedef struct s_philo
 	int				id;
 	int				left_fork;
 	int				right_fork;
-	int 			count_meal;
 	unsigned long	last_meal;
-	int 			status;
-	int				eating;
-	pthread_t		philo_id;
 	unsigned long	tt_die;
-	pthread_mutex_t lock;
+	pthread_mutex_t *lock;
+	pthread_mutex_t *print_lock;
 	struct s_data	*st_data;
 }t_philo;
 
@@ -43,6 +40,7 @@ typedef struct s_data
 	int				nbr_philo;
 	int				dead;
 	int				end;
+	pthread_t		*philo_id;
 	unsigned long	death_time;
 	unsigned long	eat_time;
 	unsigned long	sleep_time;
@@ -50,8 +48,9 @@ typedef struct s_data
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	meals;
-	pthread_mutex_t	lock;
-	pthread_mutex_t	write;
+	pthread_mutex_t	*lock;
+	pthread_mutex_t	*print_lock;
+	//pthread_mutex_t	write;
 }t_data;
 
 void			exit_error(char *msg, t_data *data);
@@ -65,7 +64,7 @@ unsigned long	get_time(void);
 void			*routine(void *pointer);
 void			print_msg(char *msg, t_philo *philo);
 int				ft_usleep(unsigned long time);
-void			check_dead(t_data *data, t_philo *philo);
+int				check_death(t_data *data, t_philo *philo);
 void			end_philos(t_data *data);
 void			ft_putstr_fd(char *s, int fd);
 void			ft_clear_data(t_data *data);
