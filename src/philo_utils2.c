@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 12:20:50 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/12 17:42:15 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:29:43 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	ft_putchar_fd(char c, int fd)
 	write(fd, &c, sizeof(char));
 }
 
-int	ft_isdigit(int c)
+/* int	ft_isdigit(char *c)
 {
 	if (c >= 48 && c <= 57)
 	{
 		return (1);
 	}
 	return (0);
-}
+} */

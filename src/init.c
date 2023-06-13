@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:28:31 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/12 19:28:52 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:43:04 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 int	ft_init_data(t_data *data, char **argv)
 {
 	data->nbr_philo = ft_atoi(argv[1], data);
-	data->philos->death_time = ft_atoi(argv[2], data);
-	data->philos->eat_time = ft_atoi(argv[3], data);
 	//data->philos->sleep_time = ft_atoi(argv[4], data);
 	data->philos = malloc(sizeof(t_philo) * (data->nbr_philo));
 	if (!data->philos)
@@ -34,6 +32,7 @@ int	ft_init_data(t_data *data, char **argv)
 	if (!data->philo_id)
 		exit_error("failed to alloc philo_id memory", data);
 	data->max_meals = 0;
+	data->end = 0;
 	/* if (argc == 6)
 		data->nbr_meals = ft_atoi(argv[5], data);
 	else
@@ -77,28 +76,26 @@ int	ft_init_mutex(t_data *data)
 	return (0);
 }
 
-int	ft_create_philo(t_data *data, int argc, char **argv)
+int	ft_create_philo(t_data *data, int argc, char **argv, int i)
 {
-	int	i;
-
-	i = 0;
 	ft_init_mutex(data);
-	while (i < data->nbr_philo)
-	{
-		data->philos[i].n_meals = 0;
-		data->philos[i].sleep_time = ft_atoi(argv[4], data);
-		data->philos[i].st_data = data; //!!!!!!!
-		data->philos[i].id = i + 1;
-		data->philos[i].end = &(data->end);
-		data->philos[i].left_fork = i;
-		data->philos[i].right_fork = i + 1 % (data->nbr_philo);
-		data->philos[i].lock = &(data->lock[i]);
-		data->philos[i].print_lock = data->print_lock;  //!!!!!
-		if (argc == 6)
-		data->philos[i].nbr_meals = ft_atoi(argv[5], data);
-		else
-			data->philos[i].nbr_meals = 0;
-		i++;
-	}
+	//while (++i < data->nbr_philo)
+	//{
+	data->philos[i].n_meals = 0;
+	data->philos[i].death_time = ft_atoi(argv[2], data);
+	data->philos[i].eat_time = ft_atoi(argv[3], data);
+	data->philos[i].sleep_time = ft_atoi(argv[4], data);
+	data->philos[i].st_data = data;
+	data->philos[i].id = i + 1;
+	data->philos[i].end = &(data->end);
+	data->philos[i].left_fork = i;
+	data->philos[i].right_fork = i + 1 % (data->nbr_philo);
+	data->philos[i].lock = &(data->lock[i]);
+	data->philos[i].print_lock = data->print_lock;
+	if (argc == 6)
+	data->philos[i].nbr_meals = ft_atoi(argv[5], data);
+	else
+		data->philos[i].nbr_meals = 0;
+	//}
 	return (1);
 }

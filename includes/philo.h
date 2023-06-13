@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:57:00 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/12 23:10:01 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:30:14 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void			exit_error(char *msg, t_data *data);
 int				ft_atoi(const char *str, t_data *data);
 int				ft_init_data(t_data *data, char **argv);
 int				ft_init_mutex(t_data *data);
-int				ft_create_philo(t_data *data, int argc, char **argv);
+int				ft_create_philo(t_data *data, int argc, char **argv, int i);
 int				ft_create_forks(t_data *data);
 unsigned long	get_time(void);
 void			*routine(void *pointer);
@@ -70,6 +70,6 @@ void			ft_putstr_fd(char *s, int fd);
 void			ft_clear_data(t_data *data);
 void			ft_putchar_fd(char c, int fd);
 void			ft_eats(t_philo *philo);
-int				ft_isdigit(int c);
+//int				ft_isdigit(char *c);
 
 #endif

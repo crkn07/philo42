@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/12 19:45:30 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:28:31 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	*routine(void *pointer)
 //		printf("nº f: %d\n", data->nbr_philo);
 		//pthread_mutex_unlock(philo->lock);
 		//printf("nº: %d\n", philo->id);
+		printf("entra\n");
 		ft_eats(philo);
 		//pthread_mutex_unlock(&data->meals);
 		ft_usleep(philo->sleep_time);
@@ -90,12 +91,13 @@ int	check_death(t_data *data, t_philo *philo)
 
 void	end_philos(t_data *data)
 {
-	int	i;
+	int	i = 0;
 
 	if (data->nbr_philo == 1)
 		pthread_detach(data->philo_id[0]);
 	else
 	{
+		pthread_mutex_lock(data->philos[i].lock);
 		i = -1;
 		while (i < data->nbr_philo)
 		{
@@ -103,6 +105,8 @@ void	end_philos(t_data *data)
 			pthread_join(data->philo_id[i], NULL);
 		i++;
 		}
+		pthread_mutex_unlock(data->philos[i].lock);
+		
 	}
 	i = -1;
 	while (++i < data->nbr_philo)
