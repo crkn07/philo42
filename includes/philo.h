@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:57:00 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/12 13:03:55 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/12 23:10:01 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,16 @@
 
 typedef struct s_philo
 {
+	int				*end;
 	int				n_meals;
 	int				id;
 	int				left_fork;
 	int				right_fork;
+	unsigned long	sleep_time;
+	unsigned long	death_time;
+	unsigned long	eat_time;
 	unsigned long	last_meal;
+	int				nbr_meals;
 	unsigned long	tt_die;
 	pthread_mutex_t *lock;
 	pthread_mutex_t *print_lock;
@@ -35,19 +40,15 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int				nbr_meals;
 	int				max_meals;
 	int				nbr_philo;
 	int				dead;
 	int				end;
 	pthread_t		*philo_id;
-	unsigned long	death_time;
-	unsigned long	eat_time;
-	unsigned long	sleep_time;
 	unsigned long	start_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	meals;
+	//pthread_mutex_t	meals;
 	pthread_mutex_t	*lock;
 	pthread_mutex_t	*print_lock;
 	//pthread_mutex_t	write;
@@ -55,10 +56,9 @@ typedef struct s_data
 
 void			exit_error(char *msg, t_data *data);
 int				ft_atoi(const char *str, t_data *data);
-int				ft_init_data(t_data *data, int argc, char **argv);
+int				ft_init_data(t_data *data, char **argv);
 int				ft_init_mutex(t_data *data);
-int				ft_create_philo(t_data *data);
-int				ft_create_philo(t_data *data);
+int				ft_create_philo(t_data *data, int argc, char **argv);
 int				ft_create_forks(t_data *data);
 unsigned long	get_time(void);
 void			*routine(void *pointer);

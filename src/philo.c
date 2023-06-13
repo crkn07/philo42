@@ -6,34 +6,35 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:56:18 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/08 19:16:24 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/12 23:17:42 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	ft_init(t_data *data, int argc, char **argv)
+int	ft_init(t_data *data, char **argv)
 {
-	ft_init_data(data, argc, argv);
+	ft_init_data(data, argv);
 	//ft_init_mutex(data);
 	return (0);
 }
 
-int	ft_create_threads(t_data *data)
+int	ft_create_threads(t_data *data, int argc, char **argv)
 {
 	int	i;
 
 	i = -1;
-	data->start_time = get_time();
+	//data->start_time = get_time();
 	pthread_mutex_lock(data->print_lock);
-	while( ++i < data->nbr_philo)
+	while(++i < data->nbr_philo)
 	{
-		if (!ft_create_philo(data))
+		if (!ft_create_philo(data, argc, argv))
 			exit_error("failed create philos\n", data);
 		data->philos[i].last_meal = get_time();
-		if (pthread_create(&data->philos[i].philo_id, NULL, routine, 
-			&(data->philos[i])))
-			exit_error("a problem has ocurred creating threads", data);
+		pthread_create(&data->philo_id[i], NULL, routine,
+			&(data->philos[i]));
+		printf("entra create_threads\n");
+			//exit_error("a problem has ocurred creating threads", data);
 	}
 	pthread_mutex_unlock(data->print_lock);
 /* 	while (stop == 1)
@@ -99,14 +100,15 @@ void	end_subprocesses(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	
-	//atexit(ft_leaks);	
+
+	//atexit(ft_leaks);
 	data.end = 0;
 	if (argc < 5 || argc > 6)
 		exit_error("invalid number of arguments\n", &data);
 	//ft_check_args(argc, argv, &data);
-	ft_init(&data, argc, argv);
-	ft_create_threads(&data);
+	ft_init(&data, argv);
+	ft_create_threads(&data, argc, argv);
+	printf("entra\n");
 	end_subprocesses(&data);
 	end_philos(&data);
 	return (0);
