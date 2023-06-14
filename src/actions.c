@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/13 18:38:25 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:25:43 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,18 @@ void	*routine(void *pointer)
 	//t_data	*data;
 
 	philo = pointer;
-	//data = philo->st_data;
 	pthread_mutex_lock(philo->print_lock);
 	pthread_mutex_unlock(philo->print_lock);
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->eat_time / 50);
 	pthread_mutex_lock(philo->print_lock);
 	//pthread_mutex_lock(&data->meals);
-	while (philo->end == 0)
+	while (*(philo->end) == 0)
 	{
 		pthread_mutex_unlock(philo->print_lock);
-		//pthread_mutex_unlock(&data->meals);
-		//pthread_mutex_lock(&data->meals);
-//		printf("nº f: %d\n", data->nbr_philo);
-		//pthread_mutex_unlock(philo->lock);
-		//printf("nº: %d\n", philo->id);
-		printf("entra\n");
 		ft_eats(philo);
 		//pthread_mutex_unlock(&data->meals);
-		ft_usleep(philo->sleep_time);
-		print_msg("think", philo);
+		printf("entra\n");
 		//pthread_mutex_lock(philo->lock);
 		//pthread_mutex_lock(&data->meals);
 		pthread_mutex_lock(philo->print_lock);
@@ -128,7 +120,9 @@ void	ft_eats(t_philo *philo)
 	//printf("entra en ft_eats\n");
 	print_msg("take a right fork", philo);
 	pthread_mutex_lock(philo->lock);
-	philo->last_meal = get_time();
+	pthread_mutex_lock(philo->print_lock);
+	philo->last_meal = get_time() - philo->start_time;
+	pthread_mutex_unlock(philo->print_lock);
 	print_msg("eat", philo);
 	//printf("ft_eats--%d%p\n", philo->id, philo->lock);
 	if (philo->nbr_meals != 0)
@@ -138,4 +132,6 @@ void	ft_eats(t_philo *philo)
 	pthread_mutex_unlock(&philo->st_data->forks[philo->left_fork]);
 	pthread_mutex_unlock(&philo->st_data->forks[philo->right_fork]);
 	print_msg("sleep", philo);
+	//ft_usleep(philo->sleep_time);
+	print_msg("think", philo);
 }

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:56:18 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/13 18:19:06 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/14 13:16:30 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ int	ft_create_threads(t_data *data, int argc, char **argv)
 	{
 		if (!ft_create_philo(data, argc, argv, i))
 			exit_error("failed create philos\n", data);
-		data->philos[i].last_meal = get_time();
-		pthread_create(&data->philo_id[i], NULL, routine,
-			&(data->philos[i]));
+		//data->philos[i].last_meal = get_time();
+		pthread_create(&data->philo_id[i], NULL, routine, &(data->philos[i]));
 		//printf("entra create_threads\n");
 			//exit_error("a problem has ocurred creating threads", data);
 	}

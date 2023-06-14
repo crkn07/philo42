@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:28:31 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/13 18:21:09 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/14 12:39:56 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_init_data(t_data *data, char **argv)
 		exit_error("failed to alloc philo_id memory", data);
 	data->max_meals = 0;
 	data->end = 0;
-	data->start_time = get_time();
+	data->init_time = get_time();
 	/* if (argc == 6)
 		data->nbr_meals = ft_atoi(argv[5], data);
 	else
@@ -86,7 +86,7 @@ int	ft_create_philo(t_data *data, int argc, char **argv, int i)
 	data->philos[i].death_time = ft_atoi(argv[2], data);
 	data->philos[i].eat_time = ft_atoi(argv[3], data);
 	data->philos[i].sleep_time = ft_atoi(argv[4], data);
-	data->philos[i].start_time = data->start_time;
+	data->philos[i].start_time = data->init_time;
 	data->philos[i].st_data = data;
 	data->philos[i].id = i + 1;
 	data->philos[i].end = &(data->end);

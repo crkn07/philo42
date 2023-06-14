@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:57:00 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/13 18:24:16 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/14 12:40:02 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ typedef struct s_data
 	int				dead;
 	int				end;
 	pthread_t		*philo_id;
-	unsigned long	start_time;
+	unsigned long	init_time;
+	unsigned long	current_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	//pthread_mutex_t	meals;
