@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/13 16:28:31 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:38:25 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	check_death(t_data *data, t_philo *philo)
 		//	}
 			//if (data->end){
 		//}
-		i = 0;
+	i = 0;
 		//pthread_mutex_lock(&data->meals);
 	while (philo[i].nbr_meals && i < philo[i].nbr_meals
 		&& philo[i].n_meals && philo[i].nbr_meals)
@@ -97,16 +97,15 @@ void	end_philos(t_data *data)
 		pthread_detach(data->philo_id[0]);
 	else
 	{
-		pthread_mutex_lock(data->philos[i].lock);
-		i = -1;
+		//pthread_mutex_lock(data->philos[i].lock);
 		while (i < data->nbr_philo)
 		{
 			pthread_mutex_unlock(data->philos[i].lock);
 			pthread_join(data->philo_id[i], NULL);
-		i++;
+			i++;
 		}
-		pthread_mutex_unlock(data->philos[i].lock);
-		
+		//pthread_mutex_unlock(data->philos[i].lock);
+
 	}
 	i = -1;
 	while (++i < data->nbr_philo)

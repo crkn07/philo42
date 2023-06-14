@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:56:18 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/13 16:32:50 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:19:06 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_create_threads(t_data *data, int argc, char **argv)
 	int	i;
 
 	i = -1;
-	data->start_time = get_time();
+	//data->start_time = get_time();
 	pthread_mutex_lock(data->print_lock);
 	while(++i < data->nbr_philo)
 	{
@@ -33,7 +33,7 @@ int	ft_create_threads(t_data *data, int argc, char **argv)
 		data->philos[i].last_meal = get_time();
 		pthread_create(&data->philo_id[i], NULL, routine,
 			&(data->philos[i]));
-		printf("entra create_threads\n");
+		//printf("entra create_threads\n");
 			//exit_error("a problem has ocurred creating threads", data);
 	}
 	pthread_mutex_unlock(data->print_lock);
@@ -83,7 +83,7 @@ int	ft_check_args(int argc, char **argv, t_data *data)
 		// printf("entra\n");
 		i = -1;
 		while (argv[j][++i])
-		{	
+		{
 			if (argv[j][i] < 48 || argv[j][i] > 57)
 				exit_error("invalid type of argument\n", data);
 		}

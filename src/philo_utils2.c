@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 12:20:50 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/13 16:29:43 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:28:40 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	print_msg(char *msg, t_philo *philo)
 
 	pthread_mutex_lock(philo->print_lock);
 	//printf("entra\n");
-//    time = get_time() - philo->st_data->start_time;
-    if (!philo->st_data->end /* && !philo->st_data->max_meals */)
-    {
+//	time = get_time() - philo->st_data->start_time;
+	if (!philo->st_data->end /* && !philo->st_data->max_meals */)
+	{
 		//pthread_mutex_unlock(philo->print_lock);
-        printf("%lu philo %d: %s\n", get_time() - philo->st_data->start_time/* time */, philo->id, msg);
+		printf("%lu philo %d: %s\n", get_time() - philo->start_time/* time */, philo->id, msg);
 		//pthread_mutex_lock(philo->print_lock);
-    }
+	}
 	pthread_mutex_unlock(philo->print_lock);
 	//printf("sale\n");
 	//printf("nº f: %d\n", philo->st_data->end);

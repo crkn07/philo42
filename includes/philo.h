@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:57:00 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/13 16:30:14 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:24:16 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_philo
 	int				right_fork;
 	unsigned long	sleep_time;
 	unsigned long	death_time;
+	unsigned long	start_time;
 	unsigned long	eat_time;
 	unsigned long	last_meal;
 	int				nbr_meals;
