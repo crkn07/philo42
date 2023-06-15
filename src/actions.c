@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/14 15:25:43 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:12:22 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,11 @@ void	*routine(void *pointer)
 		pthread_mutex_unlock(philo->print_lock);
 		ft_eats(philo);
 		//pthread_mutex_unlock(&data->meals);
-		printf("entra\n");
+		//printf("entra\n");
 		//pthread_mutex_lock(philo->lock);
-		//pthread_mutex_lock(&data->meals);
 		pthread_mutex_lock(philo->print_lock);
 	}
 	pthread_mutex_unlock(philo->print_lock);
-	//pthread_mutex_unlock(&data->meals);
 	return (NULL);
 }
 
@@ -44,37 +42,24 @@ int	check_death(t_data *data, t_philo *philo)
 {
 	int	i = 0;
 
+	data->current_time = get_time() - data->init_time;
 	//while (!data->max_meals)
 	//{
-		//i = -1;
-		//{
-			//while (++i < data->nbr_philo && !data->end)
-			//{
-				//pthread_mutex_lock(philo[i].lock);
-				//pthread_mutex_lock(philo->print_lock);
-				//pthread_mutex_lock(&data->meals);
-				//printf("check death--%p\n", philo->lock);
-	if ((get_time() - philo[i].last_meal) >= philo->death_time)
+	if ((data->current_time - philo[i].last_meal) >= philo[i].death_time)
 	{
 		print_msg("died", &philo[i]);
 		pthread_mutex_lock(philo->print_lock);
-		//pthread_mutex_lock(&data->write);
-		//printf("entra\n");
 		data->end = 1;
 		pthread_mutex_unlock(philo->print_lock);
 		return (0);
 	}
-				//pthread_mutex_unlock(philo[i].lock);
-				//pthread_mutex_unlock(&data->meals);
 		//	}
 			//if (data->end){
 		//}
-	i = 0;
-		//pthread_mutex_lock(&data->meals);
-	while (philo[i].nbr_meals && i < philo[i].nbr_meals
+	//i = 0;
+	/* while (philo[i].nbr_meals && i < philo[i].nbr_meals
 		&& philo[i].n_meals && philo[i].nbr_meals)
-		i++;
-		//pthread_mutex_unlock(&data->meals);
+		i++; */
 	pthread_mutex_lock(philo->print_lock);
 	data->max_meals = (i == data->nbr_philo);
 	pthread_mutex_unlock(philo->print_lock);
@@ -106,7 +91,6 @@ void	end_philos(t_data *data)
 		pthread_mutex_destroy(data->print_lock);
 		pthread_mutex_destroy(data->lock);
 	}
-	//pthread_mutex_destroy(&data->meals);
 	//pthread_mutex_destroy(&data->write);
 	ft_clear_data(data);
 }
@@ -117,7 +101,6 @@ void	ft_eats(t_philo *philo)
 	//printf("nº f: %d\n", philo->st_data->nbr_philo);
 	print_msg("take a left fork", philo);
 	pthread_mutex_lock(&(philo->st_data->forks[philo->right_fork]));
-	//printf("entra en ft_eats\n");
 	print_msg("take a right fork", philo);
 	pthread_mutex_lock(philo->lock);
 	pthread_mutex_lock(philo->print_lock);

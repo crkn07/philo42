@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:56:18 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/14 13:16:30 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:42:01 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	end_subprocesses(t_data *data)
 {
 	int	i;
 
-	i = -1;
 	while (1)
 	{
 		i = -1;
