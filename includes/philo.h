@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:57:00 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/14 12:40:02 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/16 14:59:37 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,18 @@ typedef struct s_data
 void			exit_error(char *msg, t_data *data);
 int				ft_atoi(const char *str, t_data *data);
 int				ft_init_data(t_data *data, char **argv);
-int				ft_init_mutex(t_data *data);
+int				ft_init_mutex(t_data *data, int i);
 int				ft_create_philo(t_data *data, int argc, char **argv, int i);
 int				ft_create_forks(t_data *data);
 unsigned long	get_time(void);
 void			*routine(void *pointer);
 void			print_msg(char *msg, t_philo *philo);
 int				ft_usleep(unsigned long time);
-int				check_death(t_data *data, t_philo *philo);
+int				check_death(t_data *data,int i);
 void			end_philos(t_data *data);
 void			ft_putstr_fd(char *s, int fd);
 void			ft_clear_data(t_data *data);
-void			ft_putchar_fd(char c, int fd);
 void			ft_eats(t_philo *philo);
-//int				ft_isdigit(char *c);
+int				ft_isdigit(char *c);
 
 #endif
