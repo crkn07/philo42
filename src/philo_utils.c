@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:50:33 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/09 17:30:23 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:04:21 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,22 @@ void	ft_clear_data(t_data *data)
 
 int	ft_usleep(unsigned long time)
 {
+	unsigned long	reference;
+
+	reference = time + get_time();
+	while (get_time() < reference)
+		usleep(700);
+		return (0);
+}
+/* int	ft_usleep(unsigned long time)
+{
 	unsigned long	start;
 
 	start = get_time();
 	while ((get_time() - start) <= time)
-		usleep(time/10);
+		usleep(700);
 	return (0);
-}
+} */
 
 int	ft_atoi(const char *str, t_data *data)
 {

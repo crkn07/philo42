@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:57:00 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/16 14:59:37 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:51:59 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_philo
 	unsigned long	start_time;
 	unsigned long	eat_time;
 	unsigned long	last_meal;
+	int				max_meals;
 	int				nbr_meals;
 	unsigned long	tt_die;
 	pthread_mutex_t *lock;
@@ -41,10 +42,10 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int				max_meals;
 	int				nbr_philo;
 	int				dead;
 	int				end;
+	int				nbr_philos_eat;
 	pthread_t		*philo_id;
 	unsigned long	init_time;
 	unsigned long	current_time;
