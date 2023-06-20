@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/19 18:25:29 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:06:53 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*routine(void *pointer)
 	philo = pointer;
 	pthread_mutex_lock(philo->print_lock);
 	pthread_mutex_unlock(philo->print_lock);
-	if (philo->id % 2 /* && philo->st_data->nbr_philo > 1 */)
+	if (philo->id % 2 && philo->st_data->nbr_philo > 1)
 		ft_usleep(philo->eat_time);
 	pthread_mutex_lock(philo->print_lock);
 	while (*(philo->end) == 0)
@@ -33,11 +33,11 @@ void	*routine(void *pointer)
 }
 
 
-int	check_death(t_data *data,int i)
+int	check_death(t_data *data,int i) 
 {
 	data->current_time = get_time() - data->philos->start_time;
 		if ((data->current_time - data->philos[i].last_meal) 
-		>= data->philos[i].death_time + 1)
+		> (data->philos[i].death_time + 1))
 	{
 		print_msg("died", &data->philos[i]);
 		pthread_mutex_lock(data->print_lock);
@@ -45,9 +45,10 @@ int	check_death(t_data *data,int i)
 		pthread_mutex_unlock(data->print_lock);
 		return (0);
 	}
-	data->nbr_philos_eat = 0;
-	if (data->philos[i].n_meals == data->philos[i].max_meals)
+	if (data->philos[i].n_meals == data->philos[i].max_meals 
+		&& data->philos[i].all_meals == 0)
 	{
+		data->philos[i].all_meals = 1;
 		if (++data->nbr_philos_eat == data->nbr_philo)
 		{
 		pthread_mutex_lock(data->print_lock);
@@ -92,13 +93,9 @@ void	ft_eats(t_philo *philo)
 	print_msg("take a right fork", philo);
 	pthread_mutex_lock(philo->lock);
 	philo->last_meal = get_time() - philo->start_time;
-	//pthread_mutex_lock(philo->print_lock);//! creo que no sirve
-	//pthread_mutex_unlock(philo->print_lock);//! creo que no sirve
 	print_msg("eat", philo);
 	if (philo->max_meals != 0)
 		philo->n_meals++;
-	/* if (philo->n_meals == philo->nbr_meals)
-		philo->st_data->max_meals = 1; */
 	pthread_mutex_unlock(philo->lock);
 	ft_usleep(philo->eat_time);
 	pthread_mutex_unlock(&philo->st_data->forks[philo->left_fork]);

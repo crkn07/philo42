@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:50:33 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/19 14:04:21 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:10:27 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	ft_clear_data(t_data *data)
 {
 	if (data->philos)
 		free(data->philos);
+	if (data->philo_id)
+		free(data->philo_id);
 	if (data->forks)
 		free(data->forks);
 	if (data->lock)
@@ -46,18 +48,9 @@ int	ft_usleep(unsigned long time)
 
 	reference = time + get_time();
 	while (get_time() < reference)
-		usleep(700);
+		usleep(200);
 		return (0);
 }
-/* int	ft_usleep(unsigned long time)
-{
-	unsigned long	start;
-
-	start = get_time();
-	while ((get_time() - start) <= time)
-		usleep(700);
-	return (0);
-} */
 
 int	ft_atoi(const char *str, t_data *data)
 {
