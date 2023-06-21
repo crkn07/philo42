@@ -6,7 +6,7 @@
 #    By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/09 16:26:37 by crtorres          #+#    #+#              #
-#    Updated: 2023/06/20 16:49:16 by crtorres         ###   ########.fr        #
+#    Updated: 2023/06/21 14:45:39 by crtorres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ DOT_O = _objFiles
 
 CC = gcc
 
-CFLAGS =-Wall -Wextra -Werror
+CFLAGS =-Wall -Wextra -Werror -g3 -fsanitize=thread
 
 SRC = philo.c philo_utils.c philo_utils2.c actions.c init.c \
 
@@ -46,12 +46,10 @@ clean:
 	$(PURPLE) "\n" CLEANING... $(RESET)
 	@rm -f $(OBJS)
 	@rm -rf $(DOT_O)
-	@rm -rf $(DOT_O2)
-	@rm -rf $(NAME)
-	@rm -rf $(BONUS)
 	$(GREEN) "CLEAN COMPLETE\n" $(RESET)
 
 fclean: clean
+	@rm -rf $(NAME)
 
 re: fclean
 	@make -s all

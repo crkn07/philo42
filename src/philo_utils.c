@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:50:33 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/20 17:10:27 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:04:57 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ unsigned long	get_time(void)
 	struct timeval	tm;
 
 	gettimeofday(&tm, NULL);
-	return ((tm.tv_sec * (unsigned long)1000) + (tm.tv_usec / 1000));
+	return ((tm.tv_sec * 1000) + (tm.tv_usec / 1000));
 }
 
 void	ft_clear_data(t_data *data)
@@ -49,10 +49,10 @@ int	ft_usleep(unsigned long time)
 	reference = time + get_time();
 	while (get_time() < reference)
 		usleep(200);
-		return (0);
+	return (0);
 }
 
-int	ft_atoi(const char *str, t_data *data)
+int	ft_atoi(const char *str)
 {
 	int			sign;
 	int			i;
@@ -75,6 +75,6 @@ int	ft_atoi(const char *str, t_data *data)
 		i++;
 	}
 	if ((sign * j) > 2147483647 || (sign * j) < -2147483648)
-		exit_error("error\n", data);
+		exit_without_free("error in atoi\n");
 	return (sign * j);
 }

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:28:31 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/20 17:11:04 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:49:57 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_init_data(t_data *data, char **argv)
 {
-	data->nbr_philo = ft_atoi(argv[1], data);
+	data->nbr_philo = ft_atoi(argv[1]);
 	data->philos = malloc(sizeof(t_philo) * (data->nbr_philo));
 	if (!data->philos)
 		exit_error("failed to alloc memory philosopher\n", data);
@@ -32,8 +32,7 @@ int	ft_init_data(t_data *data, char **argv)
 		exit_error("failed to alloc philo_id memory", data);
 	data->end = 0;
 	data->init_time = get_time();
-	if (data->nbr_philo <= 0 || data->nbr_philo > 200 || data->philos->death_time < 0
-		|| data->philos->eat_time < 0 || data->philos->sleep_time < 0)
+	if (data->nbr_philo <= 0 || data->nbr_philo > 200)
 		exit_error("invalid input data\n", data);
 	return (0);
 }
@@ -51,12 +50,11 @@ int	ft_init_mutex(t_data *data, int i)
 
 int	ft_create_philo(t_data *data, int argc, char **argv, int i)
 {
-	//ft_init_mutex(data, i);
 	data->philos[i].n_meals = 0;
 	data->philos[i].all_meals = 0;
-	data->philos[i].death_time = ft_atoi(argv[2], data);
-	data->philos[i].eat_time = ft_atoi(argv[3], data);
-	data->philos[i].sleep_time = ft_atoi(argv[4], data);
+	data->philos[i].death_time = ft_atoi(argv[2]);
+	data->philos[i].eat_time = ft_atoi(argv[3]);
+	data->philos[i].sleep_time = ft_atoi(argv[4]);
 	data->philos[i].start_time = data->init_time;
 	data->philos[i].st_data = data;
 	data->philos[i].id = i + 1;
@@ -66,7 +64,7 @@ int	ft_create_philo(t_data *data, int argc, char **argv, int i)
 	data->philos[i].lock = &(data->lock[i]);
 	data->philos[i].print_lock = data->print_lock;
 	if (argc == 6)
-	data->philos[i].max_meals = ft_atoi(argv[5], data);
+	data->philos[i].max_meals = ft_atoi(argv[5]);
 	else
 		data->philos[i].max_meals = -1;
 	return (1);
