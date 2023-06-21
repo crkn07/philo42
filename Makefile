@@ -6,7 +6,7 @@
 #    By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/09 16:26:37 by crtorres          #+#    #+#              #
-#    Updated: 2023/06/21 14:45:39 by crtorres         ###   ########.fr        #
+#    Updated: 2023/06/21 15:37:35 by crtorres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ DOT_O = _objFiles
 
 CC = gcc
 
-CFLAGS =-Wall -Wextra -Werror -g3 -fsanitize=thread
+CFLAGS =-Wall -Wextra -Werror
 
 SRC = philo.c philo_utils.c philo_utils2.c actions.c init.c \
 
@@ -54,7 +54,7 @@ fclean: clean
 re: fclean
 	@make -s all
 
-# COLORS #
+# *COLORS *#
 #
 GREEN 	= @echo "\033[0;32m"
 BLUE 	= @echo "\033[0;34m"

@@ -6,12 +6,14 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:57:00 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/21 12:01:34 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:39:33 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
+
+//*===LIBRARIES===*/
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -20,8 +22,8 @@
 # include <unistd.h>
 # include <string.h>
 
-//===SETTINGS COLORS===/
-//===Color font code===/
+//*===SETTINGS COLORS===*/
+//*===Color font code===*/
 # define BLACK   "\x1B[30m"
 # define RED     "\x1b[31m"
 # define GREEN   "\x1b[32m"
@@ -35,7 +37,7 @@
 # define LBLUE   "\x1B[38;2;53;149;240m"
 # define LGREEN  "\x1B[38;2;17;245;120m"
 # define GRAY    "\x1B[38;2;176;174;174m"
-//===Color background code===/
+//*===Color background code===*/
 # define BG_BLACK   "\x1B[40m"
 # define BG_RED     "\x1B[41m"
 # define BG_GREEN   "\x1B[42m"
@@ -51,6 +53,8 @@
 # define BG_ROSE    "\x1B[48;2;255;151;203m"
 
 # define RESET   "\x1b[0m"
+
+//*===STRUCTURES===*/
 
 typedef struct s_philo
 {
@@ -74,7 +78,6 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int				nbr_philo;
-	int				dead;
 	int				end;
 	int				nbr_philos_eat;
 	pthread_t		*philo_id;
@@ -85,6 +88,8 @@ typedef struct s_data
 	pthread_mutex_t	*lock;
 	pthread_mutex_t	*print_lock;
 }t_data;
+
+//*===FUNCTIONS===*/
 
 void			exit_error(char *msg, t_data *data);
 int				ft_atoi(const char *str);

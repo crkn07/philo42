@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/21 14:47:05 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:17:58 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	end_philos(t_data *data)
 	i = -1;
 	while (++i < data->nbr_philo)
 	{
-		pthread_mutex_destroy(&data->forks[i]);
-		pthread_mutex_destroy(&(data->print_lock[i]));
+		pthread_mutex_destroy(&(data->forks[i]));
+		pthread_mutex_destroy(data->print_lock);
 		pthread_mutex_destroy(&(data->lock[i]));
 	}
 	ft_clear_data(data);
