@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:28:31 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/21 12:49:57 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:22:44 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,23 @@ int	ft_init_mutex(t_data *data, int i)
 	return (0);
 }
 
+/**
+ * The function initializes the properties of a philosopher in a dining
+ * philosophers problem.
+ * 
+ * @param data A pointer to a struct containing information about the 
+ * simulation, such as the number of philosophers and the time the simulation 
+ * started.
+ * @param argc The number of arguments passed to the program, including the 
+ * program name itself.
+ * @param argv argv is a pointer to an array of characters representing the 
+ * command line arguments passed to the program. In this specific function, 
+ * it is used to extract the values for the death time, eat time, sleep time,
+ * and maximum number of meals for each philosopher.
+ * @param i The index of the philosopher being created.
+ * 
+ * @return an integer value of 1.
+ */
 int	ft_create_philo(t_data *data, int argc, char **argv, int i)
 {
 	data->philos[i].n_meals = 0;
@@ -60,7 +77,7 @@ int	ft_create_philo(t_data *data, int argc, char **argv, int i)
 	data->philos[i].id = i + 1;
 	data->philos[i].end = &(data->end);
 	data->philos[i].left_fork = i;
-	data->philos[i].right_fork = i + 1 % (data->nbr_philo);
+	data->philos[i].right_fork = (i + 1) % (data->nbr_philo);
 	data->philos[i].lock = &(data->lock[i]);
 	data->philos[i].print_lock = data->print_lock;
 	if (argc == 6)

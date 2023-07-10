@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:56:18 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/21 14:46:24 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:20:15 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_create_threads(t_data *data, int argc, char **argv)
 	int	i;
 
 	i = -1;
-	pthread_mutex_lock(data->print_lock);
 	while (++i < data->nbr_philo)
 	{
 		ft_init_mutex(data, i);
@@ -25,7 +24,6 @@ int	ft_create_threads(t_data *data, int argc, char **argv)
 			exit_error("failed create philos\n", data);
 		pthread_create(&(data->philo_id[i]), NULL, routine, &(data->philos[i]));
 	}
-	pthread_mutex_unlock(data->print_lock);
 	return (0);
 }
 
@@ -74,8 +72,8 @@ int	ft_check_args(int argc, char **argv)
 }
 /* void	ft_leaks()
 {
-	atexit(ft_leaks);
 	system("leaks -q philo");
+	atexit(ft_leaks);
 } */
 
 int	main(int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:10:54 by crtorres          #+#    #+#             */
-/*   Updated: 2023/06/21 15:43:57 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:26:32 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*routine(void *pointer)
 	philo = pointer;
 	pthread_mutex_lock(philo->print_lock);
 	pthread_mutex_unlock(philo->print_lock);
-	if (philo->id % 2)
+	if (philo->id % 2 == 0)
 		ft_usleep(philo->eat_time);
 	pthread_mutex_lock(philo->print_lock);
 	while (*(philo->end) == 0)
@@ -88,7 +88,7 @@ void	end_philos(t_data *data)
 void	ft_eats(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->st_data->forks[philo->left_fork]));
-	print_msg("take a left fork", philo);
+	print_msg("take his fork", philo);
 	pthread_mutex_lock(&(philo->st_data->forks[philo->right_fork]));
 	print_msg("take a right fork", philo);
 	pthread_mutex_lock(philo->lock);
