@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:28:31 by crtorres          #+#    #+#             */
-/*   Updated: 2023/07/10 14:22:44 by crtorres         ###   ########.fr       */
+/*   Updated: 2023/07/11 19:12:27 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	ft_create_philo(t_data *data, int argc, char **argv, int i)
 	data->philos[i].right_fork = (i + 1) % (data->nbr_philo);
 	data->philos[i].lock = &(data->lock[i]);
 	data->philos[i].print_lock = data->print_lock;
+	data->philos[i].last_meal = 0;
 	if (argc == 6)
 	data->philos[i].max_meals = ft_atoi(argv[5]);
 	else
